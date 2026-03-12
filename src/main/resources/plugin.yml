@@ -1,0 +1,40 @@
+name: TownyConflict
+version: 1.0.0
+main: fr.townyconflict.TownyConflict
+api-version: 1.20
+depend: [Towny, Vault]
+
+description: Système de guerre avancé pour Towny
+author: TownyConflict
+
+commands:
+  tc:
+    description: Commande principale TownyConflict
+    usage: /tc <sous-commande>
+    aliases: [townyconflict, tconflict]
+
+permissions:
+  townyconflict.war.declare:
+    description: Déclarer une guerre
+    default: true
+  townyconflict.war.surrender:
+    description: Capituler
+    default: true
+  townyconflict.assault.start:
+    description: Lancer un assaut
+    default: true
+  townyconflict.assault.join:
+    description: Rejoindre un assaut
+    default: true
+  townyconflict.merc.hire:
+    description: Recruter un mercenaire
+    default: true
+  townyconflict.merc.accept:
+    description: Accepter un contrat mercenaire
+    default: true
+  townyconflict.treaty.propose:
+    description: Proposer un traité
+    default: true
+  townyconflict.admin:
+    description: Accès aux commandes admin
+    default: op

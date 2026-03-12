@@ -1,0 +1,322 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              TownyConflict - Configuration                   ║
+# ║   Modifiez ce fichier puis faites /tc reload pour appliquer  ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ─────────────────────────────────────────────
+#  GUERRES
+# ─────────────────────────────────────────────
+war:
+  # Coût pour déclarer une guerre (prélevé sur la banque de la town)
+  declaration_cost: 500.0
+
+  # Délai de grâce en heures après déclaration (avant le 1er assaut possible)
+  grace_period_hours: 24
+
+  # Nombre maximum de guerres simultanées par town
+  max_simultaneous_wars: 2
+
+  # Cooldown en jours avant de redéclarer une guerre contre la même town
+  redeclaration_cooldown_days: 7
+
+  # Délai minimum en jours avant qu'une capitulation soit possible
+  surrender_min_days: 3
+
+  # Autoriser les guerres entre towns d'une même nation (guerre civile)
+  allow_civil_war: false
+
+  # Durée maximale d'une guerre en jours (0 = illimité)
+  max_war_duration_days: 30
+
+  # ── Conditions de victoire disponibles lors de la déclaration ──
+  # Ces options apparaissent dans le menu de déclaration de guerre.
+  # Désactivez-en pour les retirer du menu.
+  victory_conditions:
+    assault_wins:
+      enabled: true
+      label: "Victoires d'assauts"
+      min: 1
+      max: 20
+      default: 5
+
+    war_points:
+      enabled: true
+      label: "Points de guerre cumulés"
+      min: 5
+      max: 100
+      default: 10
+
+    time_limit:
+      enabled: true
+      label: "Limite de temps (jours)"
+      min: 1
+      max: 30
+      default: 7
+
+  # ── Options de guerre (configurables par les joueurs à la déclaration) ──
+  options:
+    # Autoriser les renforts de la nation
+    allow_nation_reinforcements:
+      enabled: true
+      label: "Renforts nationaux autorisés"
+      default: true
+
+    # Autoriser le recrutement de mercenaires
+    allow_mercenaries:
+      enabled: true
+      label: "Mercenaires autorisés"
+      default: true
+
+    # Autoriser les alliés à rejoindre (nations alliées)
+    allow_allied_nations:
+      enabled: true
+      label: "Nations alliées autorisées"
+      default: false
+
+    # Autoriser les missiles (si plugin missiles présent)
+    allow_missiles:
+      enabled: false
+      label: "Missiles autorisés"
+      default: false
+
+  # ── Récompenses disponibles (configurables par les joueurs) ──
+  rewards:
+    money:
+      enabled: true
+      label: "Transfert d'argent"
+      max_percentage: 15       # % max de la banque de la town vaincue
+      default_percentage: 10
+
+    claims:
+      enabled: true
+      label: "Revendication de plots"
+      max_plots: 10
+      default_plots: 3
+
+    vassalization:
+      enabled: true
+      label: "Vassalisation"
+      duration_days: 14        # Durée de la vassalisation
+
+    non_aggression:
+      enabled: true
+      label: "Non-agression imposée"
+      min_days: 3
+      max_days: 30
+      default_days: 7
+
+# ─────────────────────────────────────────────
+#  ASSAUTS
+# ─────────────────────────────────────────────
+assault:
+  # Cooldown entre deux assauts contre la même town (en heures)
+  cooldown_hours: 2
+
+  # Fenêtre de contre-attaque après la fin d'un assaut (en minutes)
+  counter_attack_window_minutes: 5
+
+  # Nombre minimum de membres connectés dans la town défenseure pour lancer un assaut
+  min_defenders_online: 2
+
+  # ── Phases de l'assaut ──
+  phases:
+    mobilization:
+      duration_seconds: 180    # 3 minutes
+      pvp_enabled: false
+
+    point1:
+      duration_seconds: 600    # 10 minutes
+      capture_threshold: 15    # Points pour capturer le point
+      points_per_30sec: 1      # Points gagnés en tenant la zone toutes les 30 sec
+      points_per_kill: 1       # Points gagnés par kill
+
+    point2:
+      duration_seconds: 600
+      capture_threshold: 15
+      points_per_30sec: 1
+      points_per_kill: 1
+
+    final_point:
+      duration_seconds: 900    # 15 minutes
+      capture_threshold: 20
+      points_per_30sec: 2      # Valeur doublée
+      points_per_kill: 1
+
+  # ── Points de guerre rapportés selon le résultat ──
+  war_points_reward:
+    point1_only: 1
+    point2_captured: 2
+    full_victory: 5            # Mairie capturée
+    defense_success: 1         # Bonus au défenseur
+
+  # ── Zone de capture ──
+  capture_zone:
+    radius: 10                 # Rayon en blocs
+    no_build_radius: 28        # Rayon d'interdiction de construction autour du centre
+
+  # Rayon autour du t-spawn pour le point de ralliement attaquant (en blocs, hors claims)
+  rally_point_offset: 30
+
+# ─────────────────────────────────────────────
+#  RENFORTS NATIONAUX
+# ─────────────────────────────────────────────
+reinforcements:
+  # Quota par taille de nation (nombre de towns membres)
+  quotas:
+    solo: 0          # 1 town
+    small: 2         # 2-4 towns
+    medium: 4        # 5-9 towns
+    large: 6         # 10+ towns
+
+  # Seuils de taille
+  thresholds:
+    small_max: 4
+    medium_max: 9
+
+# ─────────────────────────────────────────────
+#  MERCENAIRES
+# ─────────────────────────────────────────────
+mercenaries:
+  # Nombre max de mercenaires par camp par assaut
+  max_per_team: 3
+
+  # Délai pour accepter un contrat (en secondes)
+  accept_timeout_seconds: 600  # 10 minutes
+
+  # % du paiement versé à la signature (le reste à la victoire)
+  upfront_payment_percent: 50
+
+  # Cooldown en jours après désertion
+  desertion_cooldown_days: 3
+
+  # Seuls les joueurs sans nation peuvent être mercenaires
+  only_nationless: false
+
+  # Réduction de réputation par recrutement de mercenaire
+  reputation_cost: 2
+
+# ─────────────────────────────────────────────
+#  RÉPUTATION
+# ─────────────────────────────────────────────
+reputation:
+  enabled: true
+
+  changes:
+    declare_war: -5
+    win_war: 10
+    lose_war: -3
+    honor_treaty: 3
+    break_treaty: -20
+    hire_mercenary: -2
+    surrender: -5
+
+  # Seuils de réputation affectant le coût de déclaration
+  declaration_cost_modifier:
+    below_minus_50: 2.0        # Coût x2 si réputation < -50
+    below_minus_20: 1.5        # Coût x1.5 si réputation < -20
+    above_50: 0.75             # Coût x0.75 si réputation > 50
+
+  # En dessous de ce seuil, les mercenaires refusent automatiquement les contrats
+  mercenary_refuse_threshold: -30
+
+# ─────────────────────────────────────────────
+#  TRAITÉS
+# ─────────────────────────────────────────────
+treaties:
+  # Disponible après X jours de guerre
+  available_after_days: 3
+
+  # Délai pour répondre à une proposition de traité (en heures)
+  response_timeout_hours: 24
+
+  types:
+    peace:
+      enabled: true
+      label: "Traité de paix"
+    non_aggression:
+      enabled: true
+      label: "Non-agression"
+    ceasefire:
+      enabled: true
+      label: "Cessez-le-feu temporaire"
+      max_days: 7
+
+# ─────────────────────────────────────────────
+#  MESSAGES & INTERFACE
+# ─────────────────────────────────────────────
+messages:
+  prefix: "&8[&cTownyConflict&8] "
+  war_declared: "&c{attacker} &7a déclaré la guerre à &c{defender}&7!"
+  assault_started: "&c⚔ Assaut lancé par &f{attacker} &csur &f{defender}&c!"
+  assault_won: "&a✔ &f{winner} &aa remporté l'assaut contre &f{loser}&a!"
+  assault_lost: "&c✘ &f{loser} &ca perdu l'assaut contre &f{winner}&c!"
+  war_won: "&6★ &f{winner} &6a remporté la guerre contre &f{loser}&6!"
+  point_captured: "&a✔ Point &f{point} &acapturé par &f{team}&a!"
+  merc_offer: "&6[Mercenaire] &f{town} &7vous propose &6{amount}$ &7pour rejoindre leur assaut."
+  treaty_proposed: "&b[Traité] &f{sender} &7propose un traité : &b{type}&7."
+  cooldown: "&cVous devez attendre encore &f{time} &cavant de relancer un assaut."
+  not_in_war: "&cVotre town n'est pas en guerre."
+  not_mayor: "&cSeul le mayor peut effectuer cette action."
+  no_permission: "&cVous n'avez pas la permission d'effectuer cette action."
+
+# ─────────────────────────────────────────────
+#  GUI (Menus In-Game)
+# ─────────────────────────────────────────────
+gui:
+  # Titre des menus
+  titles:
+    main_menu: "&8⚔ &cTownyConflict &8⚔"
+    war_declare: "&8Déclarer une guerre"
+    war_options: "&8Options de guerre"
+    victory_conditions: "&8Conditions de victoire"
+    rewards: "&8Récompenses de guerre"
+    war_status: "&8Statut de la guerre"
+    assault_menu: "&8Menu d'assaut"
+    merc_menu: "&8Recrutement mercenaire"
+    treaty_menu: "&8Proposer un traité"
+
+  # Matériaux des items dans les menus (noms Bukkit Material)
+  materials:
+    war_icon: IRON_SWORD
+    assault_icon: DIAMOND_SWORD
+    merc_icon: GOLD_INGOT
+    treaty_icon: WHITE_BANNER
+    confirm: LIME_WOOL
+    cancel: RED_WOOL
+    back: ARROW
+    info: PAPER
+    enabled: LIME_DYE
+    disabled: GRAY_DYE
+    money_reward: GOLD_NUGGET
+    claims_reward: GRASS_BLOCK
+    vassalization_reward: IRON_BARS
+    non_aggression_reward: WHITE_WOOL
+    victory_kills: SKELETON_SKULL
+    victory_wins: SHIELD
+    victory_points: NETHER_STAR
+    victory_time: CLOCK
+
+# ─────────────────────────────────────────────
+#  BASE DE DONNÉES
+# ─────────────────────────────────────────────
+database:
+  # Type : sqlite ou mysql
+  type: sqlite
+
+  # SQLite : chemin relatif au dossier du plugin
+  sqlite:
+    file: townyconflict.db
+
+  # MySQL (ignoré si type = sqlite)
+  mysql:
+    host: localhost
+    port: 3306
+    database: townyconflict
+    username: root
+    password: ""
+    pool_size: 5
+
+# ─────────────────────────────────────────────
+#  DEBUG
+# ─────────────────────────────────────────────
+debug: false
